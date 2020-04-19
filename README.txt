@@ -14,3 +14,8 @@ how it works:
      6. during all of this the server continues to listen for new connections.
 
 note: because each client is handled in a different thread at the server, we can handle multiple clients, and even if one client experiences an error the others will continue to work unaffected. 
+
+
+
+
+Email: hasan.alsulaimanaqa@agu.edu.tr
