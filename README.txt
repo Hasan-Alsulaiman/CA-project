@@ -18,4 +18,4 @@ note: because each client is handled in a different thread at the server, we can
 
 
 
-Email: hasan.alsulaimanaqa@agu.edu.tr
+hasan.alsulaimanaqa@agu.edu.tr
