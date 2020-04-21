@@ -8,11 +8,11 @@ import base64
 
 # this function takes CA's public K + user Public K + signature and verifies it
 keypath = ''
-def verifyMe(keypath,sigPath,TextPath):
-    file = open(TextPath, "rb")
-    TextToVerify = file.read()
+def verifyMe(keypath,sigPath,PublicKey):
+    file = open(PublicKey, "rb")
+    publicKey = file.read()
     file.close()
-    print("text to verify:",TextToVerify)
+    print("text to verify:",publicKey)
     file = open(sigPath, "rb")
     sig = file.read()
     file.close()
@@ -22,19 +22,26 @@ def verifyMe(keypath,sigPath,TextPath):
     try:
         ciphertext = key.verify(  
             sig,  
-            TextToVerify,  
+            publicKey,  
             padding.PSS(  
                     mgf=padding.MGF1(algorithm=hashes.SHA256()),  
                     salt_length=padding.PSS.MAX_LENGTH,  
             ),  
             hashes.SHA256()  
         ) 
+        error = False
     except cryptography.exceptions.InvalidSignature as e:
+        error = True
+    if(error):
         print('ERROR: Payload and/or signature files failed verification!')
+    else:
+        print("succsess!")
+
 # keypath to server public key
 keypath = 'CA_PublicKey.pem'
 # path to signed user key
-sig = 'Hasan.sig'
+sig = 'Client#2.sig'
 #path to user public key
-text = 'Client#1PublicKey.pem'
-# verifyMe(keypath,sig,text)
+publicKey = 'Client#2PublicKey.pem'
+# call the function
+verifyMe(keypath,sig,publicKey)

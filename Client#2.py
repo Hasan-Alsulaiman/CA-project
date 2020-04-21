@@ -4,7 +4,7 @@ import pickle
 
 ClientName = "Client#2"
 # CSR = cert sign request / CERTUP = cert upload / CERTREQ = cert request
-msgType = "CERTREQ"
+msgType = "CSR"
 # user id of another client whose cert is requested
 requested = "Client#1"
 
@@ -32,7 +32,7 @@ print('Protocol:', protocols[sock.proto])
 print()
 
 # get public key
-file = open("Client#1PublicKey.pem", "rb")
+file = open("Client#2PublicKey.pem", "rb")
 public = file.read()
 file.close()
 
