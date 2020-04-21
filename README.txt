@@ -15,6 +15,17 @@ how it works:
 
 note: because each client is handled in a different thread at the server, we can handle multiple clients, and even if one client experiences an error the others will continue to work unaffected. 
 
+Phase 2 - Certificate Exchange:
+     in this phase, users can do more than just create certificates, they now can request another user's certificate from the server. they can also upload their own certificate to the certificate sharing server.
+     note: the certtificate sharing server is also multithreaded, it runs on the same ip as the certificate signing server, but there is no overlap between them since each of them runs on a different thread.
+     in order for the server to distinguish between the different functions it must perform for the client, the client selects the desired function using the "type" variable in the message he sends, the type can be:
+          type = CSR / for certificate signing request
+               in this case the client uploads his public key + his id + type = CSR
+          type = CERTUP / for certificate upload
+               in this case the client uploads his signed key + his id + type = CERTUP
+          type = CERTREQ / for certificate request
+               in this case the client uploads the id of requested user + his id + type = CERTREQ
+
 
 
 
