@@ -35,7 +35,7 @@ class ClientThread(threading.Thread):
                     self.csocket.sendall(pickle.dumps('ack'))
                 # if incoming msg is cert request
                 elif(dataUnpickled['type']=='CERTREQ'):
-                    print("Recieved a certificate ...")
+                    print("Recieved a certificate request...")
                     print("RECIEVED DATA: ",dataUnpickled['requested'])
                     # send back the cert of requested user (if exists)
                     check = os.path.exists(dataUnpickled['requested']+'.sig')
