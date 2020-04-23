@@ -21,6 +21,7 @@ class ClientThread(threading.Thread):
                     print('sending data back to the client')
                     KeyNameSignature = {'CLIENT ID':dataUnpickled['name'],'CLIENT KEY':dataUnpickled['key'],'SIGNED CLIENT KEY':SignedKey}
                     self.csocket.sendall(pickle.dumps(KeyNameSignature))
+                    print('finished ;)')
                     # Save the Public key in PEM format  
                     with open(dataUnpickled['name']+'.sig', "wb") as f:  
                         f.write(base64.b64encode(SignedKey))
@@ -36,18 +37,21 @@ class ClientThread(threading.Thread):
                 # if incoming msg is cert request
                 elif(dataUnpickled['type']=='CERTREQ'):
                     print("Recieved a certificate request...")
-                    print("RECIEVED DATA: ",dataUnpickled['requested'])
+                    print("RECIEVED DATA: ",dataUnpickled['request'])
                     # send back the cert of requested user (if exists)
-                    check = os.path.exists(dataUnpickled['requested']+'.sig')
+                    check = os.path.exists(dataUnpickled['request']+'.sig')
                     if(check):
-                        print(dataUnpickled['requested']+' certificate found, sending...')
-                        with open(dataUnpickled['requested']+'.sig', "rb") as f:
+                        print(dataUnpickled['request']+' certificate found, sending...')
+                        with open(dataUnpickled['request']+'.sig', "rb") as f:
                             certificate = f.read()
                             f.close()
-                            msg = {'cert':certificate,'id':dataUnpickled['requested']}
+                            msg = {'cert':certificate,'id':dataUnpickled['request']}
                             self.csocket.sendall(pickle.dumps(msg))
+                            print('finished ;)')
                     else:
-                        print(dataUnpickled['requested']+" certificate does not exist")
+                        msg = dataUnpickled['request']+" certificate does not exist"
+                        print(msg)
+                        self.csocket.sendall(pickle.dumps(msg))
 
                         
 

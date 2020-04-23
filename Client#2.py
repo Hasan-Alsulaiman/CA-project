@@ -4,7 +4,7 @@ import pickle
 
 ClientName = "Client#2"
 # CSR = cert sign request / CERTUP = cert upload / CERTREQ = cert request
-msgType = "CSR"
+msgType = "CERTREQ"
 # user id of another client whose cert is requested
 requested = "Client#1"
 
@@ -58,7 +58,7 @@ try:
     # to request the certificate of a certain user
     elif(msgType == "CERTREQ"):
         # send user id of the user whose cert is requested
-        message = {'requested':requested, 'name': ClientName, 'type': msgType}
+        message = {'request':requested, 'name': ClientName, 'type': msgType}
         print('sending {!r}'.format(message))
         sock.sendall(pickle.dumps(message))
 

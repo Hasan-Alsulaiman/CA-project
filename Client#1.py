@@ -58,7 +58,7 @@ try:
     # to request the certificate of a certain user
     elif(msgType == "CERTREQ"):
         # send user id of the user whose cert is requested
-        message = {'requested':requested, 'name': ClientName, 'type': msgType}
+        message = {'request':requested, 'name': ClientName, 'type': msgType}
         print('sending {!r}'.format(message))
         sock.sendall(pickle.dumps(message))
 
