@@ -31,6 +31,17 @@ print('Type    :', types[sock.type])
 print('Protocol:', protocols[sock.proto])
 print()
 
+# recieve data from server
+data = sock.recv(1024)
+# if server asked for username
+if (pickle.loads(data) == 'Please Enter your username'):
+    print("recieved: ", pickle.loads(data))
+    # enter username
+    ans = input('username: ')
+    # send username
+    sock.sendall(pickle.dumps(ans))
+    print('sending', ans)
+
 # get public key
 file = open("Client#1PublicKey.pem", "rb")
 public = file.read()
@@ -66,10 +77,8 @@ try:
     while True:
         # recieve data from server
         data = sock.recv(1024)
-        if (pickle.loads(data) == 'Please Enter your username'):
+        if (data):
             print("recieved: ", pickle.loads(data))
-            ans = input('username: ')
-            sock.sendall(pickle.dumps(ans))
         # ask the client whether he wants to continue
         ans = input('\nTerminate connection? (y/n) :')
         # prompt user to close the connection
