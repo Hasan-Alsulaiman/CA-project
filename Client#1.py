@@ -66,7 +66,10 @@ try:
     while True:
         # recieve data from server
         data = sock.recv(1024)
-        print("recieved: ", pickle.loads(data))
+        if (pickle.loads(data) == 'Please Enter your username'):
+            print("recieved: ", pickle.loads(data))
+            ans = input('username: ')
+            sock.sendall(pickle.dumps(ans))
         # ask the client whether he wants to continue
         ans = input('\nTerminate connection? (y/n) :')
         # prompt user to close the connection

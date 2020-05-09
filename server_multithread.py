@@ -9,7 +9,13 @@ class ClientThread(threading.Thread):
         # get username
         msg = 'Please Enter your username'
         self.csocket.sendall(pickle.dumps(msg))
-        Authentication = verifyIt.verifyUser(ans)
+        # the username that the client sent
+        ans = self.csocket.recv(1024)
+        
+        username = pickle.loads(ans)
+        print(username)
+        # check if username exists in database UserList.json
+        Authentication = verifyIt.verifyUser(username)
         if(Authentication):
             msg = 'Welcome'
             self.csocket.sendall(pickle.dumps(msg))
