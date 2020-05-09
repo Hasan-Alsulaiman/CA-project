@@ -11,17 +11,28 @@ class ClientThread(threading.Thread):
         self.csocket.sendall(pickle.dumps(msg))
         # the username that the client sent
         ans = self.csocket.recv(1024)
-        
-        username = pickle.loads(ans)
-        print(username)
-        # check if username exists in database UserList.json
-        Authentication = verifyIt.verifyUser(username)
-        if(Authentication):
-            msg = 'Welcome'
-            self.csocket.sendall(pickle.dumps(msg))
-        else:
-            msg = 'Username not found!'
-            self.csocket.sendall(pickle.dumps(msg))
+        if(ans):
+            username = pickle.loads(ans)
+            print("username: ",username)
+            # check if username exists in database UserList.json
+            Authentication = verifyIt.verifyUser(username)
+            if(Authentication):
+                print("user authenticated successfully")
+                msg = 'Welcome'
+                self.csocket.sendall(pickle.dumps(msg))
+            else:
+                print('user authentication failed!')
+                msg = 'Username not found!, if you want to sign up send "register: <username>", else send "c" to close connection'
+                self.csocket.sendall(pickle.dumps(msg))
+                result = self.csocket.recv(1024)
+                if(result):
+                    ans2 = pickle.loads(result)
+                    print(ans2)
+                    if(ans2 == 'c'):
+                        print("bye")
+                        clientsocket.close()
+                    elif(ans2[:8]=='register'):
+                        print("registering new user")
     def run(self):
         print ("Connection from : ", clientAddress)
         while True:
