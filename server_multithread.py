@@ -1,4 +1,4 @@
-import socket, threading, pickle, signIt, base64, os.path
+import socket, threading, pickle, signIt, base64, os.path,verifyIt
 # password to my private key
 password = b'myPassword'
 class ClientThread(threading.Thread):
@@ -6,6 +6,16 @@ class ClientThread(threading.Thread):
         threading.Thread.__init__(self)
         self.csocket = clientsocket
         print ("New connection added: ", clientAddress)
+        # get username
+        msg = 'Please Enter your username'
+        self.csocket.sendall(pickle.dumps(msg))
+        Authentication = verifyIt.verifyUser(ans)
+        if(Authentication):
+            msg = 'Welcome'
+            self.csocket.sendall(pickle.dumps(msg))
+        else:
+            msg = 'Username not found!'
+            self.csocket.sendall(pickle.dumps(msg))
     def run(self):
         print ("Connection from : ", clientAddress)
         while True:
