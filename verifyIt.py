@@ -5,6 +5,7 @@ from cryptography.hazmat.primitives.serialization import load_pem_private_key
 from cryptography.hazmat.primitives.serialization import load_pem_public_key  
 import cryptography.exceptions
 import base64
+import json
 
 # this function takes CA's public K + user Public K + signature and verifies it
 keypath = ''
@@ -37,11 +38,27 @@ def verifyMe(keypath,sigPath,PublicKey):
     else:
         print("succsess!")
 
+# this function authenticates a newly connected user, prompts him to sign up if not already
+def verifyUser(ans):
+
+    # open the user list
+    with open ('UserList.json','rb') as f:
+        users = json.load(f)
+        f.close()
+    # check for that particular user
+    if(ans in users):
+        # if exists, return True
+        return True
+    else:
+        # if not exists return False
+        return False
+
+
 # keypath to server public key
-keypath = 'CA_PublicKey.pem'
+# keypath = 'CA_PublicKey.pem'
 # path to signed user key
-sig = 'Client#2.sig'
+# sig = 'Client#2.sig'
 #path to user public key
-publicKey = 'Client#2PublicKey.pem'
+# publicKey = 'Client#2PublicKey.pem'
 # call the function
-verifyMe(keypath,sig,publicKey)
+# verifyMe(keypath,sig,publicKey)
