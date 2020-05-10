@@ -37,25 +37,8 @@ while True:
     data = sock.recv(1024)
     if(data):
         response = pickle.loads(data)
-        # if server asked for username
-        if ( response== 'Please Enter your username'):
-            print("recieved: ", pickle.loads(data))
-            # enter username
-            ans = input('username: ')
-            # send username
-            sock.sendall(pickle.dumps(ans))
-            print('sending', ans)
-        # if server fails to find user
-        s = 'Username not found!, if you want to sign up send "register: <username>", else send "c" to close connection'
-        if (response ==s ):
-            print(s)
-            ans2 = input('response: ')
-            sock.sendall(pickle.dumps(ans2))
-            # if user chose to close connection
-            if(ans2 == 'c'):
-                sock.close()
-                print('closing socket')
-                break
+        print(response)
+        ans0 = input("response: ")
         if(response=='Welcome'):
             break
     else:
