@@ -22,7 +22,7 @@ class ClientThread(threading.Thread):
                 self.csocket.sendall(pickle.dumps(msg))
             else:
                 print('user authentication failed!')
-                msg = 'Username not found!, if you want to sign up send "r", or send "c" to close connection'
+                msg = 'Username not found!, to sign up send "r", or send "c" to close connection'
                 self.csocket.sendall(pickle.dumps(msg))
                 result = self.csocket.recv(1024)
                 if(result):
@@ -48,10 +48,13 @@ class ClientThread(threading.Thread):
                                 }}
                                 
                                 with open('UserList.json','r+') as f:
-                                    data = json.load(f)
-                                    data.update(entry)
+                                    data0 = json.load(f)
+                                    data0.update(entry)
                                     f.seek(0)
-                                    json.dump(data,f)
+                                    json.dump(data0,f)
+                                    f.close()
+                            msg="Welcome"
+                            self.csocket.sendall(pickle.dumps(msg))
 
 
 
