@@ -1,4 +1,4 @@
-import socket, threading, pickle, signIt, base64, os.path,verifyIt
+import socket, threading, pickle, signIt, base64, os.path,verifyIt,json
 # password to my private key
 password = b'myPassword'
 class ClientThread(threading.Thread):
@@ -22,7 +22,7 @@ class ClientThread(threading.Thread):
                 self.csocket.sendall(pickle.dumps(msg))
             else:
                 print('user authentication failed!')
-                msg = 'Username not found!, if you want to sign up send "register: <username>", else send "c" to close connection'
+                msg = 'Username not found!, if you want to sign up send "r", or send "c" to close connection'
                 self.csocket.sendall(pickle.dumps(msg))
                 result = self.csocket.recv(1024)
                 if(result):
@@ -31,8 +31,29 @@ class ClientThread(threading.Thread):
                     if(ans2 == 'c'):
                         print("bye")
                         clientsocket.close()
-                    elif(ans2[:8]=='register'):
-                        print("registering new user")
+                    elif(ans2 == 'r'):
+                        print("registering new user: ")
+                        msg = "please choose a username"
+                        self.csocket.sendall(pickle.dumps(msg))
+                        result0 = self.csocket.recv(1024)
+                        if(result0):
+                            name = pickle.loads(result0)
+                            msg = 'please choose a password'
+                            self.csocket.sendall(pickle.dumps(msg))
+                            result1 = self.csocket.recv(1024)
+                            if(result1):
+                                password = pickle.loads(result1)
+                                entry = {name, password}
+                                with open('UserList.json','r+') as f:
+                                    y = json.loads(f)
+                                    y.update(entry)
+                                    json.dumps(y,f)
+                                    f.close()
+
+
+
+                                
+
     def run(self):
         print ("Connection from : ", clientAddress)
         while True:
