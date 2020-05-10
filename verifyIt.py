@@ -42,7 +42,7 @@ def verifyMe(keypath,sigPath,PublicKey):
 def verifyUser(ans):
     print('checking...')
     # open the user list
-    with open ('UserList.json','rb+') as f:
+    with open ('UserList.json','r') as f:
         users = json.load(f)
         f.close()
     print('opened list...')
@@ -63,4 +63,4 @@ def verifyUser(ans):
 # publicKey = 'Client#2PublicKey.pem'
 # call the function
 # verifyMe(keypath,sig,publicKey)
-verifyUser('h')
+# verifyUser('h')
