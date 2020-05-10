@@ -1,4 +1,4 @@
-import socket, threading, pickle, signIt, base64, os.path,verifyIt,json
+import socket, threading, pickle, signIt, base64, os.path,verifyIt,json, time
 # password to my private key
 password = b'myPassword'
 class ClientThread(threading.Thread):
@@ -21,40 +21,50 @@ class ClientThread(threading.Thread):
                 msg = 'Welcome'
                 self.csocket.sendall(pickle.dumps(msg))
             else:
-                print('user authentication failed!')
-                msg = 'Username not found!, to sign up send "r", or send "c" to close connection'
-                self.csocket.sendall(pickle.dumps(msg))
-                result = self.csocket.recv(1024)
-                if(result):
-                    ans2 = pickle.loads(result)
-                    print(ans2)
-                    if(ans2 == 'c'):
-                        print("bye")
-                        clientsocket.close()
-                    elif(ans2 == 'r'):
-                        print("registering new user: ")
-                        msg = "please choose a username"
-                        self.csocket.sendall(pickle.dumps(msg))
-                        result0 = self.csocket.recv(1024)
-                        if(result0):
-                            name = pickle.loads(result0)
-                            msg = 'please choose a password'
+                while True:
+                    print('user authentication failed!')
+                    msg = 'Username not found!, to sign up send "r", or send "c" to close connection'
+                    self.csocket.sendall(pickle.dumps(msg))
+                    result = self.csocket.recv(1024)
+                    if(result):
+                        ans2 = pickle.loads(result)
+                        print(ans2)
+                        if(ans2 == 'c'):
+                            print("bye")
+                            clientsocket.close()
+                            t1 = threading.Thread(target = ClientThread) 
+                            t1.start() 
+                            time.sleep(1) 
+                            stop_threads = True
+                            t1.join() 
+                            print('thread killed')
+                            break
+                        elif(ans2 == 'r'):
+                            print("registering new user: ")
+                            msg = "please choose a username"
                             self.csocket.sendall(pickle.dumps(msg))
-                            result1 = self.csocket.recv(1024)
-                            if(result1):
-                                password = pickle.loads(result1)
-                                entry = {name:{
-                                    "password":password
-                                }}
-                                
-                                with open('UserList.json','r+') as f:
-                                    data0 = json.load(f)
-                                    data0.update(entry)
-                                    f.seek(0)
-                                    json.dump(data0,f)
-                                    f.close()
-                            msg="Welcome"
-                            self.csocket.sendall(pickle.dumps(msg))
+                            result0 = self.csocket.recv(1024)
+                            if(result0):
+                                name = pickle.loads(result0)
+                                msg = 'please choose a password'
+                                self.csocket.sendall(pickle.dumps(msg))
+                                result1 = self.csocket.recv(1024)
+                                if(result1):
+                                    password = pickle.loads(result1)
+                                    entry = {name:{
+                                        "password":password
+                                    }}
+                                    
+                                    with open('UserList.json','r+') as f:
+                                        data0 = json.load(f)
+                                        data0.update(entry)
+                                        f.seek(0)
+                                        json.dump(data0,f)
+                                        f.close()
+                                msg="Welcome"
+                                self.csocket.sendall(pickle.dumps(msg))
+                                break
+
 
 
 

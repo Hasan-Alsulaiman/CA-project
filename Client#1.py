@@ -45,7 +45,6 @@ while True:
 
     else:
         break
-print("We are in :D")
 if (response =='Welcome'):
             # get public key
     file = open("Client#1PublicKey.pem", "rb")
