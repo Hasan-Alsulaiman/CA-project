@@ -5,7 +5,7 @@ from cryptography.hazmat.primitives.serialization import load_pem_private_key
 from cryptography.hazmat.primitives.serialization import load_pem_public_key  
 import cryptography.exceptions
 import base64
-import json
+import pickle
 
 # this function takes CA's public K + user Public K + signature and verifies it
 keypath = ''
@@ -43,7 +43,7 @@ def verifyUser(ans):
 
     # open the user list
     with open ('UserList.json','rb') as f:
-        users = json.load(f)
+        users = pickle.loads(f)
         f.close()
     # check for that particular user
     if(ans in users):
