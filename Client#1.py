@@ -39,6 +39,8 @@ while True:
         response = pickle.loads(data)
         print(response)
         ans0 = input("response: ")
+        sock.sendall(pickle.dumps(ans0))
+
         if(response=='Welcome'):
             break
     else:
