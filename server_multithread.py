@@ -43,12 +43,15 @@ class ClientThread(threading.Thread):
                             result1 = self.csocket.recv(1024)
                             if(result1):
                                 password = pickle.loads(result1)
-                                entry = {name, password}
+                                entry = {name:{
+                                    "password":password
+                                }}
+                                
                                 with open('UserList.json','r+') as f:
-                                    y = json.loads(f)
-                                    y.update(entry)
-                                    json.dumps(y,f)
-                                    f.close()
+                                    data = json.load(f)
+                                    data.update(entry)
+                                    f.seek(0)
+                                    json.dump(data,f)
 
 
 
