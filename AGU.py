@@ -1,4 +1,4 @@
-import hashlib, binascii, os
+import hashlib, binascii, os, json
 
 def hash_password(password):
     """Hash a password for storing."""
@@ -8,7 +8,11 @@ def hash_password(password):
     pwdhash = binascii.hexlify(pwdhash)
     return (salt + pwdhash).decode('ascii')
 
-def verify_password(stored_password, provided_password):
+def verify_password(username, provided_password):
+    with open ('UserList.json','r') as f:
+        users = json.load(f)
+        f.close()
+    stored_password = users[username]['password']
     """Verify a stored password against one provided by user"""
     salt = stored_password[:64]
     stored_password = stored_password[64:]
@@ -20,7 +24,6 @@ def verify_password(stored_password, provided_password):
     return pwdhash == stored_password
 
 
-# C = hash_password("hi")
-# print(C)
-# V = verify_password(C,"hi")
-# print(V)
+C = hash_password("hi")
+print(C)
+V = verify_password("alli","hi")
