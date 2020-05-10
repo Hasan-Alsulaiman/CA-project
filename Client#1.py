@@ -38,14 +38,14 @@ while True:
     if(data):
         response = pickle.loads(data)
         print(response)
-        ans0 = input("response: ")
+        if(response =='Welcome'):
+            break
+        ans0 = input("Ans: ")
         sock.sendall(pickle.dumps(ans0))
 
-        if(response=='Welcome'):
-            break
     else:
         break
-
+print("We are in :D")
 if (response =='Welcome'):
             # get public key
     file = open("Client#1PublicKey.pem", "rb")
