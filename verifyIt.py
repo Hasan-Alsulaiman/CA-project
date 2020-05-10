@@ -42,8 +42,8 @@ def verifyMe(keypath,sigPath,PublicKey):
 def verifyUser(ans):
 
     # open the user list
-    with open ('UserList.json','r') as f:
-        users = json.loads(f)
+    with open ('UserList.json','rb') as f:
+        users = json.load(f)
         f.close()
     # check for that particular user
     if(ans in users):
