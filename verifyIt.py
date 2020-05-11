@@ -47,12 +47,12 @@ def verifyUser(ans):
         f.close()
     print('opened list...')
     # check for that particular user
-    print(users["list"][0][0])
+    print(users["list"][0])
     length = len(users["list"])
     check = False
     for i in range(length):
         print(ans,i)
-        if ans in users["list"][i][0]:
+        if ans in users["list"][i]:
             # if exists, return True
             check = True
             break
@@ -68,4 +68,4 @@ def verifyUser(ans):
 # publicKey = 'Client#2PublicKey.pem'
 # call the function
 # verifyMe(keypath,sig,publicKey)
-# print(verifyUser('h-'))
+print(verifyUser('r2'))
