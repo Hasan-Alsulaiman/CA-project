@@ -58,14 +58,14 @@ if (response =='Welcome'):
 
     try:
         # to send a certificate signing request
-        if(msgType == "CSR"):
+        if(msgType.upper() == "CSR"):
 
             # Send public key + user id + request type
             message = {'key': public, 'name': ClientName, 'type': msgType}
             print('sending {!r}'.format(message))
             sock.sendall(pickle.dumps(message))
         # to send my certificate for upload
-        elif(msgType == "CERTUP"):
+        elif(msgType.upper() == "CERTUP"):
             # open the certificate file
             file = open(ClientName+'.sig', "rb")
             cert = file.read()
@@ -75,7 +75,7 @@ if (response =='Welcome'):
             print('sending {!r}'.format(message))
             sock.sendall(pickle.dumps(message))
         # to request the certificate of a certain user
-        elif(msgType == "CERTREQ"):
+        elif(msgType.upper() == "CERTREQ"):
             # send user id of the user whose cert is requested
             message = {'request': requested, 'name': ClientName, 'type': msgType}
             print('sending {!r}'.format(message))
