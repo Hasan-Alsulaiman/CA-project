@@ -46,6 +46,7 @@ while True:
     else:
         break
 if (response =='Welcome'):
+    msgType = input("pick an operation:\n CSR = cert sign request \n CERTUP = cert upload \n CERTREQ = cert request\n")
             # get public key
     file = open("Client#1PublicKey.pem", "rb")
     public = file.read()
