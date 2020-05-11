@@ -1,4 +1,4 @@
-import socket, threading, pickle, signIt, base64, os.path,verifyIt,json, time
+import socket, threading, pickle, signIt, base64, os.path,verifyIt,json, time,AGU
 # password to my private key
 password = b'myPassword'
 class ClientThread(threading.Thread):
@@ -12,14 +12,32 @@ class ClientThread(threading.Thread):
         # the username that the client sent
         ans = self.csocket.recv(1024)
         if(ans):
+            # after recieving username, ask for password
             username = pickle.loads(ans)
             print("username: ",username)
             # check if username exists in database UserList.json
             Authentication = verifyIt.verifyUser(username)
             if(Authentication):
-                print("user authenticated successfully")
-                msg = 'Welcome'
+                # ask for password
+                msg = "Enter password"
                 self.csocket.sendall(pickle.dumps(msg))
+                ans1 = self.csocket.recv(1024)
+                userPass = pickle.loads(ans1)
+                if(AGU.verify_password( username,userPass )):
+                    print("user authenticated successfully")
+                    msg = 'Welcome'
+                    self.csocket.sendall(pickle.dumps(msg))
+                else:
+                    print("bye")
+                    clientsocket.close()
+                    t1 = threading.Thread(target = ClientThread) 
+                    t1.start() 
+                    time.sleep(1) 
+                    stop_threads = True
+                    t1.join() 
+                    print('thread killed')
+                    
+
             else:
                 while True:
                     print('user authentication failed!')
@@ -51,8 +69,9 @@ class ClientThread(threading.Thread):
                                 result1 = self.csocket.recv(1024)
                                 if(result1):
                                     password = pickle.loads(result1)
+                                    hashedPass=AGU.hash_password(password)
                                     entry = {name:{
-                                        "password":password
+                                        "password":hashedPass
                                     }}
                                     
                                     with open('UserList.json','r+') as f:
