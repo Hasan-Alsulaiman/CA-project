@@ -8,11 +8,12 @@ def hash_password(password):
     pwdhash = binascii.hexlify(pwdhash)
     return (salt + pwdhash).decode('ascii')
 
-def verify_password(username, provided_password):
+# function takes two password and a position of a user in a list, compares two passwords
+def verify_password(username, provided_password,position):
     with open ('UserList.json','r') as f:
         users = json.load(f)
         f.close()
-    stored_password = users["list"][0][username]["password"]
+    stored_password = users["list"][position][username]["password"]
     """Verify a stored password against one provided by user"""
     salt = stored_password[:64]
     stored_password = stored_password[64:]
@@ -26,5 +27,5 @@ def verify_password(username, provided_password):
 
 # C = hash_password("hi")
 
-# V = verify_password("alli","123")
+# V = verify_password("alli","123",1)
 # print(V)

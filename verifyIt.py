@@ -50,13 +50,13 @@ def verifyUser(ans):
     length = len(users["list"])
     check = False
     for i in range(length):
-        print(ans,i)
+        position = i
         if ans in users["list"][i]:
             # if exists, return True
             check = True
             break
 
-    return check
+    return check, position
 
 
 # keypath to server public key
@@ -67,4 +67,4 @@ def verifyUser(ans):
 # publicKey = 'Client#2PublicKey.pem'
 # call the function
 # verifyMe(keypath,sig,publicKey)
-# print(verifyUser('r2'))
+# print(verifyUser('r'))

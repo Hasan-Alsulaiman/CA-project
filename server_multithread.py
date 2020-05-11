@@ -16,14 +16,14 @@ class ClientThread(threading.Thread):
             username = pickle.loads(ans)
             print("username: ",username)
             # check if username exists in database UserList.json
-            Authentication = verifyIt.verifyUser(username)
+            Authentication, position = verifyIt.verifyUser(username)
             if(Authentication):
                 # ask for password
                 msg = "Enter password"
                 self.csocket.sendall(pickle.dumps(msg))
                 ans1 = self.csocket.recv(1024)
                 userPass = pickle.loads(ans1)
-                if(AGU.verify_password( username,userPass )):
+                if(AGU.verify_password( username,userPass,position)):
                     print("user authenticated successfully")
                     msg = 'Welcome'
                     self.csocket.sendall(pickle.dumps(msg))
@@ -64,11 +64,13 @@ class ClientThread(threading.Thread):
                             result0 = self.csocket.recv(1024)
                             if(result0):
                                 name = pickle.loads(result0)
-                                msg = 'please choose a password'
+                                msg = 'please choose a password, min length = 3'
                                 self.csocket.sendall(pickle.dumps(msg))
                                 result1 = self.csocket.recv(1024)
                                 if(result1):
                                     password = pickle.loads(result1)
+                                    if(len(password)<3):
+                                        continue
                                     hashedPass=AGU.hash_password(password)
                                     entry = {name:{
                                         "password":hashedPass
