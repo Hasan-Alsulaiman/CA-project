@@ -10,6 +10,6 @@ def update(entry):
     os.remove("UserList.json")
     os.rename('temp.json', 'UserList.json')
 
-# update({"hasan":{
+# update([{"h":{
 #                                         "password":1
-#                                     }})
+#                                     }}])
