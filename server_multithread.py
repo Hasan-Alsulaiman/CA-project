@@ -1,4 +1,4 @@
-import socket, threading, pickle, signIt, base64, os.path,verifyIt,json, time,AGU
+import socket, threading, pickle, signIt, base64, os.path,verifyIt,json, time,AGU,updateList
 # password to my private key
 password = b'myPassword'
 class ClientThread(threading.Thread):
@@ -73,13 +73,10 @@ class ClientThread(threading.Thread):
                                     entry = {name:{
                                         "password":hashedPass
                                     }}
-                                    
-                                    with open('UserList.json','r+') as f:
-                                        data0 = json.load(f)
-                                        data0.update(entry)
-                                        f.seek(0)
-                                        json.dump(data0,f)
-                                        f.close()
+                                    # update the user list with new user info
+                                    updateList.update(entry)
+
+
                                 msg="Welcome"
                                 self.csocket.sendall(pickle.dumps(msg))
                                 break
