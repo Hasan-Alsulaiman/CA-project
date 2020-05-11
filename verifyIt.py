@@ -47,12 +47,17 @@ def verifyUser(ans):
         f.close()
     print('opened list...')
     # check for that particular user
-    if(ans in users["list"][0]):
-        # if exists, return True
-        return True
-    else:
-        # if not exists return False
-        return False
+    print(users["list"][0][0])
+    length = len(users["list"])
+    check = False
+    for i in range(length):
+        print(ans,i)
+        if ans in users["list"][i][0]:
+            # if exists, return True
+            check = True
+            break
+
+    return check
 
 
 # keypath to server public key
@@ -63,4 +68,4 @@ def verifyUser(ans):
 # publicKey = 'Client#2PublicKey.pem'
 # call the function
 # verifyMe(keypath,sig,publicKey)
-# print(verifyUser('hasan'))
+# print(verifyUser('h-'))
