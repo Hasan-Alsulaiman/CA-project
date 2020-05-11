@@ -47,7 +47,6 @@ def verifyUser(ans):
         f.close()
     print('opened list...')
     # check for that particular user
-    print(users["list"][0])
     length = len(users["list"])
     check = False
     for i in range(length):
@@ -68,4 +67,4 @@ def verifyUser(ans):
 # publicKey = 'Client#2PublicKey.pem'
 # call the function
 # verifyMe(keypath,sig,publicKey)
-print(verifyUser('r2'))
+# print(verifyUser('r2'))
