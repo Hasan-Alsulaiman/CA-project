@@ -46,7 +46,7 @@ while True:
     else:
         break
 if (response =='Welcome'):
-    msgType = input("pick an operation:\n CSR = cert sign request \n CERTUP = cert upload \n CERTREQ = cert request\n")
+    msgType = input("pick an operation:\n csr = cert sign request \n certup = cert upload \n certreq = cert request\n")
     if(msgType.upper() == "CERTREQ"):
         requested = input("write the username of requested cert 'i.e, Client#2': ")
 

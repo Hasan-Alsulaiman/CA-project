@@ -26,7 +26,8 @@ Phase 2 - Certificate Exchange:
           type = CERTREQ / for certificate request
                in this case the client uploads the id of requested user + his id + type = CERTREQ
 
-
+phase 3 - Authentication:
+     once the client connects to the server he is asked for his username and password, if he is registered he can continue as usual, otherwise he can register as new user.
 
 
 hasan.alsulaimanaqa@agu.edu.tr
