@@ -47,7 +47,7 @@ def verifyUser(ans):
         f.close()
     print('opened list...')
     # check for that particular user
-    if(ans in users):
+    if(ans in users["list"][0]):
         # if exists, return True
         return True
     else:
@@ -63,4 +63,4 @@ def verifyUser(ans):
 # publicKey = 'Client#2PublicKey.pem'
 # call the function
 # verifyMe(keypath,sig,publicKey)
-# verifyUser('h')
+print(verifyUser('hasan'))
