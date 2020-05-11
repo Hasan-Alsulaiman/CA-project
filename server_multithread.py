@@ -92,7 +92,7 @@ class ClientThread(threading.Thread):
             if data:
                 dataUnpickled = pickle.loads(data)
                 # if the incoming msg is a certificate signing request
-                if(dataUnpickled['type']=='CSR'):
+                if(dataUnpickled['type'].upper()=='CSR'):
                     print("Recieved a certificate signing request...")
                     print("RECIEVED DATA: ",dataUnpickled['key'])
                     # sign the clients public key and return the signature
@@ -105,7 +105,7 @@ class ClientThread(threading.Thread):
                     with open(dataUnpickled['name']+'.sig', "wb") as f:  
                         f.write(base64.b64encode(SignedKey))
                 # if the incoming msg is a certificate upload
-                elif(dataUnpickled['type']=='CERTUP'):
+                elif(dataUnpickled['type'].upper()=='CERTUP'):
                     print("Recieved a certificate ...")
                     print("RECIEVED DATA: ",dataUnpickled['key'])
                     # Save the certificate key   
@@ -114,7 +114,7 @@ class ClientThread(threading.Thread):
                     # send back an acknowledge
                     self.csocket.sendall(pickle.dumps('ack'))
                 # if incoming msg is cert request
-                elif(dataUnpickled['type']=='CERTREQ'):
+                elif(dataUnpickled['type'].upper()=='CERTREQ'):
                     print("Recieved a certificate request...")
                     print("RECIEVED DATA: ",dataUnpickled['request'])
                     # send back the cert of requested user (if exists)
