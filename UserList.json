@@ -1,16 +1,6 @@
 {
     "list": [
         {
-            "r": {
-                "password": 1
-            }
-        },
-        {
-            "h": {
-                "password": 1
-            }
-        },
-        {
             "nano": {
                 "password": "b72701345da519d5dfcaa2fc4b85be0b868a08b57fb36c76aaff99f81d581354c924a9526f0c5993969a8eb8d82c4d6ccaf1f7510d2e73d80f69a3f942c8607ca6dd23f08eca3ed53bebabcd805211c9c31a05b273c684b36fc7e66318c0eeeb"
             }

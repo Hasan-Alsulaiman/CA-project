@@ -20,23 +20,20 @@ class ClientThread(threading.Thread):
             if(Authentication):
                 # ask for password
                 msg = "Enter password"
-                self.csocket.sendall(pickle.dumps(msg))
-                ans1 = self.csocket.recv(1024)
-                userPass = pickle.loads(ans1)
-                if(AGU.verify_password( username,userPass,position)):
-                    print("user authenticated successfully")
-                    msg = 'Welcome'
+                while True:
                     self.csocket.sendall(pickle.dumps(msg))
-                else:
-                    print("bye")
-                    clientsocket.close()
-                    t1 = threading.Thread(target = ClientThread) 
-                    t1.start() 
-                    time.sleep(1) 
-                    stop_threads = True
-                    t1.join() 
-                    print('thread killed')
-                    
+                    ans1 = self.csocket.recv(1024)
+                    if(ans1):
+                        userPass = pickle.loads(ans1)
+                        if(AGU.verify_password( username,userPass,position)):
+                            print("user authenticated successfully")
+                            msg = 'Welcome'
+                            self.csocket.sendall(pickle.dumps(msg))
+                            break
+                        else:
+                            msg="incorrect password! try again"
+                            continue
+
 
             else:
                 while True:
