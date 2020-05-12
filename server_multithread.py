@@ -38,7 +38,7 @@ class ClientThread(threading.Thread):
             else:
                 while True:
                     print('user authentication failed!')
-                    msg = 'Username not found!, to sign up send "r", or send "c" to close connection'
+                    msg = 'Username not found!\nto sign up send "r", or send "c" to close connection'
                     self.csocket.sendall(pickle.dumps(msg))
                     result = self.csocket.recv(1024)
                     if(result):
@@ -47,11 +47,6 @@ class ClientThread(threading.Thread):
                         if(ans2 == 'c'):
                             print("bye")
                             clientsocket.close()
-                            t1 = threading.Thread(target = ClientThread) 
-                            t1.start() 
-                            time.sleep(1) 
-                            stop_threads = True
-                            t1.join() 
                             print('thread killed')
                             break
                         elif(ans2 == 'r'):
