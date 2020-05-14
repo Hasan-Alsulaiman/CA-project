@@ -54,7 +54,7 @@ class ClientThread(threading.Thread):
                         print(ans2)
                         if(ans2 == 'c'):
                             print("bye")
-                            clientsocket.close()
+                            self.csocket.close()
                             print('thread killed')
                             break
                         elif(ans2 == 'r'):
