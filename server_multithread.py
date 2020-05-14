@@ -6,7 +6,15 @@ class ClientThread(threading.Thread):
         threading.Thread.__init__(self)
         self.csocket = clientsocket
         print ("New connection added: ", clientAddress)
-        # get username
+
+
+
+
+
+                                
+
+    def run(self):
+                # get username
         msg = 'Please Enter your username'
         self.csocket.sendall(pickle.dumps(msg))
         # the username that the client sent
@@ -74,13 +82,6 @@ class ClientThread(threading.Thread):
                                 msg="Welcome"
                                 self.csocket.sendall(pickle.dumps(msg))
                                 break
-
-
-
-
-                                
-
-    def run(self):
         print ("Connection from : ", clientAddress)
         while True:
             data = self.csocket.recv(1024)
