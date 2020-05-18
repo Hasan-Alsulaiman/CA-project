@@ -24,13 +24,28 @@ families = get_constants('AF_')
 types = get_constants('SOCK_')
 protocols = get_constants('IPPROTO_')
 
+# check what the user wants to do
+while True:
+    operation = input("Enter the number of desired operation:\n <1> certificate operations\n <2> chat\n> ")
+    if(operation == '1'):
+        server_port = 10000
+        break
+    elif(operation == '2'):
+        server_port = 20000
+        break
+    else:
+        print("the number you entered does not match an existing operation!")
+        continue
+print (server_port)
+
 # Create a TCP/IP socket
-sock = socket.create_connection(('localhost', 10000))
+sock = socket.create_connection(('localhost', server_port))
 
 print('Family  :', families[sock.family])
 print('Type    :', types[sock.type])
 print('Protocol:', protocols[sock.proto])
-print()
+address, port = sock.getsockname()
+print("address/port: ",address, port)
 
 # recieve any initial data from server
 while True:
