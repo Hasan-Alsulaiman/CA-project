@@ -46,7 +46,9 @@ class ClientThread(threading.Thread):
                 with open('chatlist.txt','w') as f:
                     # save to file
                     f.write(str(oldlist))
-                   
+                
+                # send list back to student
+                self.csocket.sendall(pickle.dumps(oldlist))
 
 
                 print(chatlist)
