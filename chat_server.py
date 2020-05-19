@@ -1,4 +1,4 @@
-import socket, threading, pickle
+import socket, threading, pickle,json
 
 
 class ClientThread(threading.Thread):
@@ -14,18 +14,49 @@ class ClientThread(threading.Thread):
             if(msg):
                 user_info = pickle.loads(msg)
                 currentuser = user_info['ClientName']
-                user_list = {currentuser:{
-                    'address':clientAddress,
-                    'target':user_info['destination'],
-                    'type':user_info['type'],
-                    'status': 'online'
+                chatlist = {'list':[{
+                    "username":currentuser,
+                    "address":clientAddress,
+                    "target":user_info['destination'],
+                    "type":user_info['type'],
+                    "status": 'online'
+                }]
                 }
-                }
-                print(user_list)
+                with open('chatlist.json','r') as f:
+                    oldlist = json.load(f)
+                    # variable the controls adding new user
+                    newuser = True
+                    for i in range(len(oldlist['list'])):
+                        print(i,"old:" ,oldlist['list'][i]['username'])
+                        if(oldlist['list'][i]['username']==chatlist['list'][0]['username']):
+                            print(i,'match found, updating...')
+                            oldlist['list'][i]=chatlist['list'][0]
+                            # dont add new user since inpout user is already signed
+                            newuser=False
+                    if(newuser):
+                        oldlist['list'].append(chatlist['list'][0])
+
+
+
+                with open('chatlist.json','w') as f:
+                    json.dump(oldlist,f)
+                   
+
+
+                print(chatlist)
             else:
-                user_list[currentuser]['status']='offline'
+                # when user signs out
+                chatlist['list'][0]['status']='offline'
+                with open('chatlist.json','r') as f:
+                    oldlist = json.load(f)
+                    for i in range(len(oldlist['list'])):
+                        if(oldlist['list'][i]['username']==chatlist['list'][0]['username']):
+                            print(oldlist['list'][i]['username'],'is offline!')
+                            oldlist['list'][i]=chatlist['list'][0]
+                with open('chatlist.json','w') as f:
+                    json.dump(oldlist,f)
                 break
-        print(user_list)
+        print(chatlist)
 
 
 LOCALHOST = "127.0.0.1"
