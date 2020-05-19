@@ -28,6 +28,7 @@ class ClientThread(threading.Thread):
                     newuser = True
                     for i in range(len(oldlist['list'])):
                         print(i,"old:" ,oldlist['list'][i]['username'])
+                        # if the user is in the list, update his info
                         if(oldlist['list'][i]['username']==chatlist['list'][0]['username']):
                             print(i,'match found, updating...')
                             oldlist['list'][i]=chatlist['list'][0]
@@ -39,6 +40,7 @@ class ClientThread(threading.Thread):
 
 
                 with open('chatlist.json','w') as f:
+                    # save to file
                     json.dump(oldlist,f)
                    
 
@@ -50,6 +52,7 @@ class ClientThread(threading.Thread):
                 with open('chatlist.json','r') as f:
                     oldlist = json.load(f)
                     for i in range(len(oldlist['list'])):
+                        # find the user and update his info
                         if(oldlist['list'][i]['username']==chatlist['list'][0]['username']):
                             print(oldlist['list'][i]['username'],'is offline!')
                             oldlist['list'][i]=chatlist['list'][0]
