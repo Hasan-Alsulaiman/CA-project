@@ -51,7 +51,7 @@ print (server_port)
 # chat operations
 if(server_port == 20000):
     msg='hi'
-    user_info = {'ClientName':ClientName,'destination':requested,'type':'key'}
+    user_info = {"ClientName":ClientName,"destination":requested,"type":'key'}
     chat(user_info,server_port)
 elif(server_port==10000):
 
