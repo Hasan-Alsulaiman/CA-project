@@ -1,7 +1,7 @@
 import socket
 import sys
 import pickle
-
+import keysharing
 ClientName = "Client#2"
 # CSR = cert sign request / CERTUP = cert upload / CERTREQ = cert request
 msgType = "CERTREQ"
@@ -22,7 +22,14 @@ def get_constants(prefix):
 def chat(user_info,server_port):
     # Create a TCP/IP socket
     sock = socket.create_connection(('localhost', server_port))
+    # reviece chat list
+
     sock.sendall(pickle.dumps(user_info))
+    while True:
+        data_chat = pickle.loads(sock.recv(1024))
+        if(data_chat):
+            print(data_chat)
+            break
     
     end = input('end connection? <y>/<n>')
     if(end == 'y'):
@@ -49,13 +56,16 @@ print (server_port)
 
 # chat operations
 if(server_port == 20000):
-    msg='hi'
-    user_info = {"ClientName":ClientName,"destination":requested,"type":'key'}
+    symkey = '1234'
+    keypath = requested+'PublicKey.pem'
+    payload = keysharing.enc(keypath,symkey)
+    
+    user_info = {"ClientName":ClientName,"destination":requested,"type":"key","payload":payload}
     chat(user_info,server_port)
 elif(server_port==10000):
 
     # Create a TCP/IP socket
-    sock = socket.create_connection(('localhost', 10000))
+    sock = socket.create_connection(('localhost', server_port))
 
     print('Family  :', families[sock.family])
     print('Type    :', types[sock.type])

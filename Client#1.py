@@ -21,8 +21,13 @@ def get_constants(prefix):
 def chat(user_info,server_port):
     # Create a TCP/IP socket
     sock = socket.create_connection(('localhost', server_port))
+    # reviece chat list
     sock.sendall(pickle.dumps(user_info))
-    
+    while True:
+        data_chat = pickle.loads(sock.recv(1024))
+        if(data_chat):
+            print(data_chat)
+            break
     end = input('end connection? <y>/<n>')
     if(end == 'y'):
         sock.close()
