@@ -1,4 +1,4 @@
-import socket, threading, pickle,json
+import socket, threading, pickle,ast 
 
 
 class ClientThread(threading.Thread):
@@ -19,11 +19,15 @@ class ClientThread(threading.Thread):
                     "address":clientAddress,
                     "target":user_info['destination'],
                     "type":user_info['type'],
+                    "payload":user_info['payload'],
                     "status": 'online'
                 }]
                 }
-                with open('chatlist.json','r') as f:
-                    oldlist = json.load(f)
+                with open('chatlist.txt','r') as f:
+                    oldlist0= f.read()
+                    oldlist = ast.literal_eval(oldlist0)
+
+                    print((oldlist))
                     # variable the controls adding new user
                     newuser = True
                     for i in range(len(oldlist['list'])):
@@ -39,9 +43,9 @@ class ClientThread(threading.Thread):
 
 
 
-                with open('chatlist.json','w') as f:
+                with open('chatlist.txt','w') as f:
                     # save to file
-                    json.dump(oldlist,f)
+                    f.write(str(oldlist))
                    
 
 
@@ -49,15 +53,17 @@ class ClientThread(threading.Thread):
             else:
                 # when user signs out
                 chatlist['list'][0]['status']='offline'
-                with open('chatlist.json','r') as f:
-                    oldlist = json.load(f)
+                with open('chatlist.txt','r') as f:
+                    oldlist0= f.read()
+                    oldlist = ast.literal_eval(oldlist0)
+        
                     for i in range(len(oldlist['list'])):
                         # find the user and update his info
                         if(oldlist['list'][i]['username']==chatlist['list'][0]['username']):
                             print(oldlist['list'][i]['username'],'is offline!')
                             oldlist['list'][i]=chatlist['list'][0]
-                with open('chatlist.json','w') as f:
-                    json.dump(oldlist,f)
+                with open('chatlist.txt','w') as f:
+                    f.write(str(oldlist))
                 break
         print(chatlist)
 
