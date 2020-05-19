@@ -1,0 +1,24 @@
+{
+    "list": [
+        {
+            "username": "Client#2",
+            "address": [
+                "127.0.0.1",
+                7555
+            ],
+            "target": "Client#1",
+            "type": "key",
+            "status": "offline"
+        },
+        {
+            "username": "Client#1",
+            "address": [
+                "127.0.0.1",
+                7558
+            ],
+            "target": "Client#2",
+            "type": "key",
+            "status": "offline"
+        }
+    ]
+}
