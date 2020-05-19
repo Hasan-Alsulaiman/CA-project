@@ -39,14 +39,14 @@ def dec(keypath,password,encryptedkey):
 
 
 
-results = enc("Client#2PublicKey.pem",'1234')
-print(results)
-c = pickle.dumps(results)
-with open("key.txt",'wb+') as f:
-    f.write(c)
-    f.close()
-with open("key.txt",'rb') as f:
-    kkk = pickle.load(f)
-print("kkk",kkk)
+# results = enc("Client#2PublicKey.pem",'1234')
+# print(results)
+# c = pickle.dumps(results)
+# with open("key.txt",'wb+') as f:
+#     f.write(c)
+#     f.close()
+# with open("key.txt",'rb') as f:
+#     kkk = pickle.load(f)
+# print("kkk",kkk)
 
-print(dec("Client#2PrivateKey.pem",b'myPassword',results))
+# print(dec("Client#2PrivateKey.pem",b'myPassword',results))
