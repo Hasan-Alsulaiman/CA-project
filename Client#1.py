@@ -1,7 +1,7 @@
 import socket
 import sys
 import pickle
-
+import keysharing
 ClientName = "Client#1"
 # CSR = cert sign request / CERTUP = cert upload / CERTREQ = cert request
 msgType = "CERTREQ"
@@ -50,8 +50,11 @@ print (server_port)
 
 # chat operations
 if(server_port == 20000):
-    msg='hi'
-    user_info = {"ClientName":ClientName,"destination":requested,"type":'key'}
+    symkey = '1234'
+    keypath = requested+'PublicKey.pem'
+    payload = keysharing.enc(keypath,symkey)
+    
+    user_info = {"ClientName":ClientName,"destination":requested,"type":"key","payload":payload}
     chat(user_info,server_port)
 elif(server_port==10000):
 

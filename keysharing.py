@@ -5,6 +5,8 @@ from cryptography.hazmat.primitives.serialization import load_pem_private_key
 from cryptography.hazmat.primitives.serialization import load_pem_public_key  
 from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives import hashes
+import pickle
+
 
 #give the function public key and a msg to encrypt
 # or
@@ -20,6 +22,7 @@ def enc(keypath,symkey):
         mgf=padding.MGF1(algorithm=hashes.SHA256()),
         algorithm=hashes.SHA256(),
         label=None))
+    
     return encrypted
 # to decrypt a symmetric key thats been encrypted with public key of user
 def dec(keypath,password,encryptedkey):
@@ -38,4 +41,12 @@ def dec(keypath,password,encryptedkey):
 
 results = enc("Client#2PublicKey.pem",'1234')
 print(results)
+c = pickle.dumps(results)
+with open("key.txt",'wb+') as f:
+    f.write(c)
+    f.close()
+with open("key.txt",'rb') as f:
+    kkk = pickle.load(f)
+print("kkk",kkk)
+
 print(dec("Client#2PrivateKey.pem",b'myPassword',results))

@@ -127,12 +127,6 @@ class ClientThread(threading.Thread):
                         msg = dataUnpickled['request']+" certificate does not exist"
                         print(msg)
                         self.csocket.sendall(pickle.dumps(msg))
-
-                        
-
-
-                
-
             else:
                 print("bye")
                 break
