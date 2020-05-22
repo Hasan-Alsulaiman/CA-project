@@ -46,7 +46,7 @@ if(comtype == '1' and chattype =='1'):
             myprivatekey = ClientName+"PrivateKey.pem"
             encryptedpass = b"myPassword"
             password = keysharing.dec(myprivatekey,encryptedpass,peerdatadecode)
-            print(password)
+            print("encrypted password:",peerdatadecode,"password:",password)
         else:
             break
 elif(comtype == '2'):
