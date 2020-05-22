@@ -1,7 +1,7 @@
 import socket
 import sys
 import pickle
-
+import keysharing
 ClientName = "Client#2"
 # CSR = cert sign request / CERTUP = cert upload / CERTREQ = cert request
 msgType = "CERTREQ"
@@ -47,8 +47,13 @@ elif(comtype == '1' and chattype == '2'):
     
     # Create a TCP/IP socket
     sock = socket.create_connection(('localhost', 11000))
-    message = input("input a msg: ")
+    password = input("pick a password: ")
+    peerpublickey = requested+'PublicKey.pem'
+    message = keysharing.enc(peerpublickey,password)
     sock.sendall(pickle.dumps(message))
+    ex = input("terminate connection?<y>/<n>")
+    if(ex=='y'):
+        sock.close()
 elif(comtype == '2'):
 
     # Create a TCP/IP socket

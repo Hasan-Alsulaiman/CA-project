@@ -1,7 +1,7 @@
 import socket
 import sys
 import pickle
-
+import keysharing
 ClientName = "Client#1"
 # CSR = cert sign request / CERTUP = cert upload / CERTREQ = cert request
 msgType = "CERTREQ"
@@ -43,7 +43,10 @@ if(comtype == '1' and chattype =='1'):
         peerdata = clientsock.recv(1024)
         if(peerdata):
             peerdatadecode = pickle.loads(peerdata)
-            print(peerdatadecode)
+            myprivatekey = ClientName+"PrivateKey.pem"
+            encryptedpass = b"myPassword"
+            password = keysharing.dec(myprivatekey,encryptedpass,peerdatadecode)
+            print(password)
         else:
             break
 elif(comtype == '2'):
