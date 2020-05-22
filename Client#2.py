@@ -1,7 +1,7 @@
 import socket
 import sys
 import pickle
-import keysharing
+import keysharing,threads
 ClientName = "Client#2"
 # CSR = cert sign request / CERTUP = cert upload / CERTREQ = cert request
 msgType = "CERTREQ"
@@ -26,34 +26,9 @@ protocols = get_constants('IPPROTO_')
 
 # open a socket for client to listen to other clients
 comtype = input("for chatting press 1\nfor certificate ops press 2\n")
-chattype = input("for recieving msg press 1\nfor sending press 2\n")
 # recieve msg
-if(comtype == '1' and chattype =='1'):
-    print('listening..')
-    LOCALHOST = "127.0.0.1"
-    PORT = 12000
-    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    server.bind((LOCALHOST, PORT))
-
-    while True:
-        server.listen(1)
-        clientsock, clientAddress = server.accept()
-        peerdata = server.recv(1024)
-        if not peerdata:
-            break
-# send msg
-elif(comtype == '1' and chattype == '2'):
-    
-    # Create a TCP/IP socket
-    sock = socket.create_connection(('localhost', 11000))
-    password = input("pick a password: ")
-    peerpublickey = requested+'PublicKey.pem'
-    message = keysharing.enc(peerpublickey,password)
-    sock.sendall(pickle.dumps(message))
-    ex = input("terminate connection?<y>/<n>")
-    if(ex=='y'):
-        sock.close()
+if(comtype == '1' ):
+    threads.communication(12000,11000)
 elif(comtype == '2'):
 
     # Create a TCP/IP socket
