@@ -2,7 +2,7 @@ import socket
 import threading
 import time
 
-def reciever(name):
+def reciever(server):
     while True:
         server.listen(1)
         clientsock, clientAddress = server.accept()
@@ -11,21 +11,24 @@ def reciever(name):
 
 
     
-def sender(name):
+def sender(target):
     # Create a TCP/IP socket
-    sock = socket.create_connection(('localhost', 11000))
+    sock = socket.create_connection(('localhost', target))
     ex = input("terminate connection?<y>/<n>")
     if(ex=='y'):
         sock.close()
-if __name__ == "__main__":
+def communication(myport,targetport):
     LOCALHOST = "127.0.0.1"
-    PORT = 12000
+    PORT = myport
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     server.bind((LOCALHOST, PORT))
 
-    x = threading.Thread(target=reciever, args=(server,))
-    x.start()
-    y = threading.Thread(target=sender, args=(1000,))
-    y.start()
+    R = threading.Thread(target=reciever, args=(server,))
+    R.start()
+    S = threading.Thread(target=sender, args=(targetport,))
+    i = input("would you like to send a msg?<y>/<n>")
+    if (i =='y'):
+        S.start()
 
+# communication(11000,12000)
