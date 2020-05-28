@@ -1,4 +1,4 @@
-###Phase 1 - Certificate Signing:
+### Phase 1 - Certificate Signing:
 
 this system consist of a TCP multi-threaded server "server_multithread.py" acting as a certificate authority CA and two clients "Client#1" and "Client#2", together they simulate a group of user who need to get their private keys signed by the CA, the CA and both clients have generated and saved their keys previously (private keys are encrypted, public keys are not).
 
@@ -15,7 +15,7 @@ how it works:
 
 note: because each client is handled in a different thread at the server, we can handle multiple clients, and even if one client experiences an error the others will continue to work unaffected. 
 
-###Phase 2 - Certificate Exchange:
+### Phase 2 - Certificate Exchange:
      in this phase, users can do more than just create certificates, they now can request another user's certificate from the server. they can also upload their own certificate to the certificate sharing server.
      note: the certificate sharing server is also multi-threaded, it runs on the same ip as the certificate signing server, but there is no overlap between them since each of them runs on a different thread.
      in order for the server to distinguish between the different functions it must perform for the client, the client selects the desired function using the "type" variable in the message he sends, the type can be:
@@ -26,11 +26,11 @@ note: because each client is handled in a different thread at the server, we can
           type = CERTREQ / for certificate request
                in this case the client uploads the id of requested user + his id + type = CERTREQ
 
-###phase 3 - Authentication:
+### phase 3 - Authentication:
      once a client connects to the server he is asked for his username and password, if he is registered he can continue as usual, otherwise he can register as a new user.
      after successfully signing in, the client is prompted to pick an operation by entering the operation's name.
 
-###phase 4 - inter-client communications
+### phase 4 - inter-client communications
      in this phase two clients will connect and share messages between each other, the messages are encrypted using AES and the password is secured using asymmetric encryption.
      operation steps:
           run Client#1.py
