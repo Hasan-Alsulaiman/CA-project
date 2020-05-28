@@ -6,9 +6,9 @@ how it works:
 1. first run the server in a terminal.
 2. run any or both of the clients, each from a separate terminal.
 3. after a client successfully connects, the server reserves a separate thread for it, and the client will send a message to the server, it contains:
-   • client id
-   • client's public key
-   • type (this is set to CSR at this phase)
+                           • client id
+                           • client's public key
+                           • type (this is set to CSR at this phase)
 4. the server then takes the client's public key and signs it using the server's private key and sends the signed key back to client, also, it saves a copy of that in a file named after the client's id.
 5. at this point, the client side is prompted to close the connection.
 6. during all of this the server continues to listen for new connections.
