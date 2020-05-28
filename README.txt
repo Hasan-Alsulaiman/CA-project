@@ -38,6 +38,7 @@ phase 4 - inter-client communications
           now open a new command line and run Client#2.py
           choose "to start new connection"
           now you can send and recieve messages
+          whenever one of the users terminates his connection, he will return to listening mode and the other user can start a new connection and send messages (the sender and reciever can exchange roles)
      the reason we do things in this order is because we cant start a new connection if no one is listening for new connections.
 
 
