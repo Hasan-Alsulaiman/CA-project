@@ -30,5 +30,16 @@ phase 3 - Authentication:
      once a client connects to the server he is asked for his username and password, if he is registered he can continue as usual, otherwise he can register as a new user.
      after successfully signing in, the client is prompted to pick an operation by entering the operation's name.
 
+phase 4 - inter-client communications
+     in this phase two clients will connect and share messages between each other, the messages are encrypted using AES and the password is secured using asymmetric encryption.
+     operation steps:
+          run Client#1.py
+          choose "to listen for new connections"
+          now open a new command line and run Client#2.py
+          choose "to start new connection"
+          now you can send and recieve messages
+     the reason we do things in this order is because we cant start a new connection if no one is listening for new connections.
+
+
 
 hasan.alsulaimanaqa@agu.edu.tr
