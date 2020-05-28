@@ -28,7 +28,7 @@ protocols = get_constants('IPPROTO_')
 comtype = input("for chatting press 1\nfor certificate ops press 2\n")
 # recieve msg
 if(comtype == '1' ):
-    threads.communication(12000,11000)
+    threads.communication(ClientName, 12000,requested,11000)
 elif(comtype == '2'):
 
     # Create a TCP/IP socket
