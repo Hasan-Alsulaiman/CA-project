@@ -22,6 +22,7 @@ def reciever(server,myname):
             print("msg: ",decmsg)
         else:
             break
+        break
 
 
 # thread for sending
@@ -39,6 +40,7 @@ def sender(target,targetname):
     sock.sendall(msgtobesent)
     ex = input("terminate connection?<y>/<n>")
     if(ex=='y'):
+        print("closing socket..")
         sock.close()
         return
 def communication(myname,myport,targetname,targetport):
@@ -47,12 +49,14 @@ def communication(myname,myport,targetname,targetport):
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     server.bind((LOCALHOST, PORT))
-
+    # thread to handle listening
     R = threading.Thread(target=reciever, args=(server,myname))
     R.start()
+    print("listening for incoming connections...")
+    # thread to send
     S = threading.Thread(target=sender, args=(targetport,targetname))
-    i = input("would you like to send a msg?<y>/<n>")
+    i = input("would you like to send a msg?<y>/<n> ")
     if (i =='y'):
         S.start()
-
+    
 # communication(11000,12000)
