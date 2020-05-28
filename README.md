@@ -36,9 +36,9 @@ once a client connects to the server he is asked for his username and password, 
 in this phase two clients will connect and share messages between each other, the messages are encrypted using AES and the password is secured using asymmetric encryption.
      operation steps:
 
-- run ~Client#1.py~
+- run `Client#1.py`
 - choose "to listen for new connections"
-- now open a new command line and run ~Client#2.py~
+- now open a new command line and run `Client#2.py`
 - choose "to start new connection"
 - now you can send and recieve messages
 
