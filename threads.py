@@ -10,8 +10,8 @@ def reciever(server,myname,targetname,targetport):
     while True:
         # thread to send
         S = threading.Thread(target=sender, args=(targetport,targetname))
-        i = input("would you like to send a msg?<y>/<n> ")
-        if (i =='y'):
+        i = input("to listen for connections press [1]\nto start a connection [2] ")
+        if (i =='2'):
             S.start()
             print("at S.start()")
             S.join()
