@@ -6,11 +6,21 @@ import pickle
 import keysharing
 
 # thread for recieving
-def reciever(server,myname):
+def reciever(server,myname,targetname,targetport):
     while True:
+        # thread to send
+        S = threading.Thread(target=sender, args=(targetport,targetname))
+        i = input("would you like to send a msg?<y>/<n> ")
+        if (i =='y'):
+            S.start()
+            print("at S.start()")
+            S.join()
+            print("at S.join()")
         server.listen(1)
         print("listening for incoming connections...")
         clientsock, clientAddress = server.accept()
+
+            
         print(clientAddress,"connected")
         while True:
             peerdata = clientsock.recv(1024)
@@ -60,17 +70,9 @@ def communication(myname,myport,targetname,targetport):
     server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     server.bind((LOCALHOST, PORT))
     # thread to handle listening
-    R = threading.Thread(target=reciever, args=(server,myname))
+    R = threading.Thread(target=reciever, args=(server,myname,targetname,targetport))
     R.start()
-    # thread to send
-    S = threading.Thread(target=sender, args=(targetport,targetname))
-    i = input("would you like to send a msg?<y>/<n> ")
-    if (i =='y'):
-        S.start()
-        print("at S.start()")
-        S.join()
-        print("at S.join()")
-        
+
 
     R.join()
     print("at R.join()")
