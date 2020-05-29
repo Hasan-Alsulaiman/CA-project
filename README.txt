@@ -33,12 +33,13 @@ phase 3 - Authentication:
 phase 4 - inter-client communications
      in this phase two clients will connect and share messages between each other, the messages are encrypted using AES and the password is secured using asymmetric encryption.
      operation steps:
-          run Client#1.py
-          choose "to listen for new connections"
-          now open a new command line and run Client#2.py
-          choose "to start new connection"
-          now you can send and recieve messages
-          whenever one of the users terminates his connection, he will return to listening mode and the other user can start a new connection and send messages (the sender and reciever can exchange roles)
+          1- run Client#1.py
+          2- choose "chat operations"
+          3- choose "to listen for new connections"
+          4- now open a new command line and run Client#2.py
+          5- choose "to start new connection", now you can send and recieve messages
+          6- after sending a message, you have two options, either terminate connection or send another message
+          7- whenever one of the users terminates his connection, he will return to listening mode and the other user can start a new connection and send messages (the sender and reciever can exchange roles)
      the reason we do things in this order is because we cant start a new connection if no one is listening for new connections.
 
 
