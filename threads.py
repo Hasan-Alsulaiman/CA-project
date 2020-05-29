@@ -13,9 +13,9 @@ def reciever(server,myname,targetname,targetport):
         i = input("to listen for connections press [1]\nto start a connection [2] ")
         if (i =='2'):
             S.start()
-            print("at S.start()")
+            print("establishing a connection..")
             S.join()
-            print("at S.join()")
+            print("connection terminated..")
         server.listen(1)
         print("listening for incoming connections...")
         clientsock, clientAddress = server.accept()
@@ -53,13 +53,12 @@ def sender(target,targetname):
         # put the msg in serial mode for sending
         msgtobesent = pickle.dumps([cyphertext,iv,encpassword])
         sock.sendall(msgtobesent)
-        ex = input("terminate connection?<y>/<n>")
+        ex = input("terminate connection ?<y>/<n> ")
         if(ex=='y'):
             print("closing socket..")
             sock.close()
             print("closed socket..")
             return
-            print("after return..")
         elif(ex=='n'):
             continue
     print("still in thread..")
@@ -74,8 +73,7 @@ def communication(myname,myport,targetname,targetport):
     R.start()
 
 
-    R.join()
-    print("at R.join()")
+
 
     return
 # communication(11000,12000)

@@ -25,8 +25,8 @@ def enc(keypath,symkey):
     
     return encrypted
 # to decrypt a symmetric key thats been encrypted with public key of user
-def dec(keypath,password,encryptedkey):
-    key = load_pem_private_key(open(keypath, 'rb').read(),password,default_backend())
+def dec(keypath,PrivateKeyPassword,encryptedkey):
+    key = load_pem_private_key(open(keypath, 'rb').read(),PrivateKeyPassword,default_backend())
     original_message = key.decrypt(
     encryptedkey,
     padding.OAEP(
